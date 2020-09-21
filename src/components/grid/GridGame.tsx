@@ -62,7 +62,7 @@ const GridGame = () => {
 
   return (
     <div className='game-container'>
-      <header>The Grid</header>
+      <header>Idempotency's Grid</header>
       <div className='game'>
         <div className='squares'>
           {grid.map((x, rx) => (
