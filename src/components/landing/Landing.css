@@ -10,7 +10,7 @@
   color: white;
   align-items: center;
 
-  max-width: 700px;
+  max-width: 710px;
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   grid-gap: 2.5rem;
