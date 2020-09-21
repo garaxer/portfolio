@@ -16,7 +16,7 @@ const press = ([x, y]: number[]) => (grid: boolean[][]) =>
   );
 
 const GridGame = () => {
-  document.title = "The Grid";
+  document.title = "Idempotency's Grid";
 
   const [grid, setGrid] = useState(initialGrid);
   const [won, setWon] = useState(false);
