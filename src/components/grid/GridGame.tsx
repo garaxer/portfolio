@@ -1,82 +1,121 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect, ChangeEvent } from "react";
+import Grid from "./Grid";
 import "./GridGame.css";
 
-const initialGrid = [
-  [false, false, false],
-  [false, false, false],
-  [false, false, false],
-];
+import { Plane, Pos } from "./Types";
 
-const press = ([x, y]: number[]) => (grid: boolean[][]) =>
+const makeGrid = (n: number): Plane => Array(n).fill(Array(n).fill(false));
+
+const BASE_GRID_SIZE = 3;
+
+const pressDiagonals = ([x, y]: Pos) => (grid: Plane) =>
+  grid.map((r, rx) =>
+    Math.abs(rx - x) > 1
+      ? r
+      : r.map((c, cy) => {
+          const xabs = Math.abs(rx - x);
+          const yabs = Math.abs(cy - y);
+          const delta = xabs + yabs;
+          console.log(yabs);
+
+          return (yabs < 2 && delta === 2) || (rx === x && cy === y) ? !c : c;
+        })
+  );
+
+const pressSqaure = ([x, y]: Pos) => (grid: Plane) =>
   grid.map((r, rx) =>
     Math.abs(rx - x) > 1
       ? r
       : r.map((c, cy) => (Math.abs(rx - x) + Math.abs(cy - y) <= 1 ? !c : c))
   );
 
+type pressPaterns = "square" | "diagonal";
+
+const press = (patternType: pressPaterns) => {
+  const patternMap = {
+    square: pressSqaure,
+    diagonal: pressDiagonals,
+  };
+  return patternMap[patternType];
+};
+
 const GridGame = () => {
   document.title = "Idempotency's Grid";
 
-  const [grid, setGrid] = useState(initialGrid);
-  const [won, setWon] = useState(false);
-  const [gridSize, setGridSize] = useState(3); // 3 is the initial grid size
   const [presses, setPresses] = useState(0);
+  const [grid, setGrid] = useState(makeGrid(BASE_GRID_SIZE));
+  const [patternType, setPatternType] = useState<pressPaterns>("diagonal");
 
-  const handleSquareClick = ([rx, ry]: number[]) => () => {
-    if (won) {
-      return;
+  useEffect(() => {
+    const upHandler = ({ key }: { key: string }) => {
+      if (key === "s") setGrid(grid.map(r => r.map(() => true)));
+    };
+    window.addEventListener("keyup", upHandler);
+    return () => {
+      window.removeEventListener("keyup", upHandler);
+    };
+  }, [grid]);
+
+  const isComplete = grid.flat().every(x => x);
+
+  const handleSquareClick = ([rx, ry]: Pos) => () => {
+    if (!isComplete) {
+      setPresses(presses + 1);
+      setGrid(press(patternType)([rx, ry])(grid));
     }
-
-    setPresses(presses + 1);
-    const newGrid = press([rx, ry])(grid);
-    setGrid(newGrid);
-
-    const didWin = newGrid.every(x => x.every(x => x));
-    console.log(didWin);
-
-    if (didWin) {
-      setGridSize(gridSize + 1);
-      setWon(true);
-    }
-  };
-
-  const gridIcon = ([rx, ry]: number[]) => (value: boolean) => {
-    return (
-      <div
-        className={`square ${value ? "square-clicked" : ""} ${
-          won ? "won" : ""
-        }`}
-        key={`${rx}${ry}`}
-        onClick={handleSquareClick([rx, ry])}
-      ></div>
-    );
   };
 
   const handleNextClick = () => {
-    setWon(false);
-    const arr = new Array(gridSize).fill(false);
-    const newGrid = arr.map(() => [...arr]);
-    setGrid(newGrid);
+    setGrid(makeGrid(grid.length + 1));
+    setPresses(0);
   };
+
+  const handleOptionChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    //TODO: Find out how to do this.
+    if (value === "square" || value === "diagonal") {
+      setPatternType(value);
+    }
+  };
+
+  const RadioButtons = () => (
+    <div className='pattern-radio'>
+      <input
+        type='radio'
+        value='square'
+        checked={patternType === "square"}
+        onChange={handleOptionChange}
+      />
+      <label htmlFor='square'>Square</label>
+      <input
+        type='radio'
+        value='diagonal'
+        checked={patternType === "diagonal"}
+        onChange={handleOptionChange}
+      />
+      <label htmlFor='diagonal'>Diagonal</label>
+    </div>
+  );
 
   return (
     <div className='game-container'>
-      <header>Idempotency's Grid</header>
+      <header>Idempotency&apos;s Grid</header>
+      <RadioButtons />
       <div className='game'>
         <div className='squares'>
-          {grid.map((x, rx) => (
-            <div key={`${rx}`} className='row'>
-              {x.map((y, ry) => gridIcon([rx, ry])(y))}
-            </div>
-          ))}
+          <Grid
+            grid={grid}
+            isComplete={isComplete}
+            onPress={handleSquareClick}
+          />
         </div>
 
-        {won && (
+        {isComplete && (
           <div className='win-text'>
-            <div className='win'> Completed in {presses} presses.</div>
+            <div className='win'>Completed in {presses} presses.</div>
             <button onClick={handleNextClick}>
-              Next - {gridSize} by {gridSize}
+              Next - {grid.length + 1} by {grid.length + 1}
             </button>
           </div>
         )}

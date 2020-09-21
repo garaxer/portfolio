@@ -37,7 +37,6 @@ const Landing = () => {
           <div className='name'>Gary Bagnall </div>
           <div className='position'>Software Engineer</div>
           <div className='email'>gbagnall8@gmail.com</div>
-          <div className='status'>Looking for work</div>
         </div>
 
         <div className='sites'>
