@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import "./GridGame.css";
 
-document.title = "The Grid";
-
 const initialGrid = [
   [false, false, false],
   [false, false, false],
@@ -18,6 +16,8 @@ const press = ([x, y]: number[]) => (grid: boolean[][]) =>
   );
 
 const GridGame = () => {
+  document.title = "The Grid";
+
   const [grid, setGrid] = useState(initialGrid);
   const [won, setWon] = useState(false);
   const [gridSize, setGridSize] = useState(3); // 3 is the initial grid size

@@ -3,6 +3,8 @@ import React from "react";
 import "./Landing.css";
 
 const Landing = () => {
+  document.title = "Gary Bagnall";
+
   /*
   <svg height="45" viewBox="0 0 16 16" version="1.1" width="45" aria-hidden="true" style="
     color: white;
