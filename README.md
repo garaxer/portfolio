@@ -1,7 +1,3 @@
-TODO: \
-roboto font and the cheat button, and all the hover and active styles. \
-press counter doesn't reset between levels
-
 ### This is a landing page which provides a link to my resume.
 
 #
