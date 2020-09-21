@@ -25,10 +25,10 @@ jobs:
           npm install
       - name: Production Build
         run: |
-          npm build
+          npm run build
       - name: Unit Tests
         run: |
-          npm test
+          npm run test
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
