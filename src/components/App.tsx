@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Landing from "./landing/Landing";
 import GridGame from "./grid/GridGame";
@@ -8,15 +8,10 @@ import GridGame from "./grid/GridGame";
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path='/gridgame'>
-          <GridGame />
-        </Route>
-
-        <Route path='/'>
-          <Landing />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path="/gridgame" element={<GridGame />} />
+        <Route path="/" element={<Landing />} />
+      </Routes>
     </Router>
   );
 }
