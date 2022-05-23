@@ -3,14 +3,20 @@ body {
 }
 
 .container {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: grid;
-  justify-content: center;
-  align-content: center;
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -388px;
+    margin-top: -205px;
+    /* min-height: 100vh; */
+    /* display: grid; */
+    /* justify-content: center; */
+    /* align-content: center; */
 }
 
+
 .card {
+  background-color: #282c34b5;
   color: white;
   align-items: center;
 
@@ -73,6 +79,13 @@ body {
 }
 
 @media screen and (max-width: 900px) {
+  .container {
+      position: fixed;
+      top: 50%;
+      margin-top: -40vh;
+      left: unset;
+      margin-left: unset;
+    }
   .name {
     font-size: 2.5rem;
     margin-bottom: 1rem;
