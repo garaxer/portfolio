@@ -1,0 +1,36 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.todos-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.todos-column {
+  flex-grow: 1;
+  margin-right: 1rem;
+  padding: 1rem;
+  padding-top: 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.todos-wrapper {
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
+.todos-todo {
+  border: 1px solid rgb(181, 181, 181);
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.todos-todo:hover {
+  background-color: tan;
+}
