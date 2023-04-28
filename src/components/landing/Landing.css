@@ -4,16 +4,15 @@ body {
 
 .container {
   position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-left: -388px;
-    margin-top: -205px;
-    /* min-height: 100vh; */
-    /* display: grid; */
-    /* justify-content: center; */
-    /* align-content: center; */
+  top: 50%;
+  left: 50%;
+  margin-left: -388px;
+  margin-top: -205px;
+  /* min-height: 100vh; */
+  /* display: grid; */
+  /* justify-content: center; */
+  /* align-content: center; */
 }
-
 
 .card {
   background-color: #282c34b5;
@@ -78,14 +77,18 @@ body {
   color: #61dafb;
 }
 
+.topLinks > a {
+  margin-right: .5rem;
+}
+
 @media screen and (max-width: 900px) {
   .container {
-      position: fixed;
-      top: 50%;
-      margin-top: -40vh;
-      left: unset;
-      margin-left: unset;
-    }
+    position: fixed;
+    top: 50%;
+    margin-top: -40vh;
+    left: unset;
+    margin-left: unset;
+  }
   .name {
     font-size: 2.5rem;
     margin-bottom: 1rem;
@@ -109,6 +112,7 @@ body {
   .sites {
     justify-content: space-evenly;
   }
+
 }
 
 @media (prefers-reduced-motion: no-preference) {
